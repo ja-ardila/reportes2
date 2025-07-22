@@ -15,7 +15,7 @@ if (isset($_SESSION['usuario'])) {
 }
 
 // Crear conexión
-$conexion = new mysqli("localhost:3306", "jardila_reportes", "Zsw2Xaq1", "jardila_reportes2");
+$conexion = new mysqli("jardila-reportes2.cuhps5uu7rzq.us-east-1.rds.amazonaws.com:3306", "jardila_reportes", "Zsw2Xaq1", "jardila_reportes2");
 
 // Verificar conexión
 if ($conexion->connect_error) {

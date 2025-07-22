@@ -295,7 +295,7 @@ $resultado = $conexion->query($sql);
             </div>";    
 
                 echo "<div class='sidebyside' id='firmar'>
-                        <a href='firmar_encargado_token.php?token=" . urlencode($fila['token']) . "' class='icon-button' title='Firmar reporte'>
+                        <a href='' class='icon-button' title='Firmar reporte'>
                         <i class='fas fa-signature'></i></a>
                       </div>";
 
