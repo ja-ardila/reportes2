@@ -30,7 +30,6 @@ exports.handler = async (event) => {
     }
     
     try {
-        // Verificar que el método sea PUT o PATCH (solo para API Gateway)
         if (event.httpMethod && event.httpMethod !== 'PUT' && event.httpMethod !== 'PATCH') {
             return {
                 statusCode: 405,
@@ -42,7 +41,6 @@ exports.handler = async (event) => {
             };
         }
 
-        // Verificar autorización (opcional para invocación directa)
         let userId = null;
         
         if (event.headers && (event.headers.Authorization || event.headers.authorization)) {
@@ -75,16 +73,13 @@ exports.handler = async (event) => {
                 };
             }
         } else {
-            // Para testing directo, usar un usuario de prueba
             userId = 1;
         }
 
-        // Obtener ID del reporte y datos
         let reporteId;
         let requestBody;
         
         if (event.pathParameters?.id) {
-            // Invocación desde API Gateway
             reporteId = event.pathParameters.id;
             try {
                 requestBody = JSON.parse(event.body);
@@ -99,7 +94,6 @@ exports.handler = async (event) => {
                 };
             }
         } else {
-            // Invocación directa - el ID debe estar en el cuerpo del evento
             requestBody = event.body ? JSON.parse(event.body) : event;
             reporteId = requestBody.id;
             
@@ -115,7 +109,6 @@ exports.handler = async (event) => {
             }
         }
 
-        // Validar que no se intenten modificar campos prohibidos
         const forbiddenFields = ['id', 'fecha', 'firma_tecnico', 'firma_encargado'];
         const forbiddenFieldsFound = Object.keys(requestBody).filter(field => 
             forbiddenFields.includes(field)
@@ -164,7 +157,6 @@ exports.handler = async (event) => {
                 };
             }
 
-            // Verificar que el reporte existe
             const [existingReporte] = await connection.execute(
                 'SELECT id, id_usuario FROM reportes WHERE id = ?',
                 [reporteId]
@@ -181,8 +173,6 @@ exports.handler = async (event) => {
                 };
             }
 
-            // Verificar permisos (opcional: solo el creador puede modificar)
-            // Si quieres que cualquier usuario autorizado pueda modificar, comenta estas líneas
             if (existingReporte[0].id_usuario !== userId) {
                 return {
                     statusCode: 403,
@@ -194,7 +184,6 @@ exports.handler = async (event) => {
                 };
             }
 
-            // Verificar si se está intentando cambiar numero_reporte y que no exista ya
             if (requestBody.numero_reporte) {
                 const [duplicateCheck] = await connection.execute(
                     'SELECT id FROM reportes WHERE numero_reporte = ? AND id != ?',
@@ -215,7 +204,6 @@ exports.handler = async (event) => {
 
             await connection.beginTransaction();
             
-            // Construir la consulta de actualización dinámicamente
             const updateFields = [];
             const updateValues = [];
             
@@ -245,25 +233,20 @@ exports.handler = async (event) => {
                 };
             }
 
-            // Agregar el ID del reporte al final para la cláusula WHERE
             updateValues.push(reporteId);
 
             const updateQuery = `UPDATE reportes SET ${updateFields.join(', ')} WHERE id = ?`;
             
             await connection.execute(updateQuery, updateValues);
 
-            // Procesar imágenes si se proporcionaron
             if (requestBody.imagenes && requestBody.imagenes.length > 0) {
-                // Eliminar imágenes existentes (opcional)
                 await connection.execute('DELETE FROM imagenes WHERE id_reporte = ?', [reporteId]);
                 
-                // Agregar nuevas imágenes
                 await processImages(requestBody.imagenes, reporteId, connection);
             }
             
             await connection.commit();
             
-            // Devolver el reporte actualizado
             const [updatedReporte] = await connection.execute(
                 `SELECT r.*, u.nombre as creado_por 
                 FROM reportes r 
@@ -303,7 +286,6 @@ exports.handler = async (event) => {
 };
 
 function validateUpdateReporteData(data) {
-    // Validaciones de formato de fecha
     if (data.fecha_inicio) {
         const fechaRegex = /^\d{4}-\d{2}-\d{2}$/;
         if (!fechaRegex.test(data.fecha_inicio)) {
@@ -332,7 +314,6 @@ function validateUpdateReporteData(data) {
         }
     }
     
-    // Validaciones de longitud
     if (data.numero_reporte && data.numero_reporte.length > 50) {
         return 'El número de reporte no puede exceder 50 caracteres';
     }
@@ -362,7 +343,6 @@ async function processImages(imagenes, reporteId, connection) {
         }
         
         try {
-            // Validar que sea base64 válido
             if (!isValidBase64(imagen.data)) {
                 console.error(`Imagen con data base64 inválida, saltando...`);
                 continue;
@@ -385,7 +365,6 @@ function isValidBase64(str) {
     try {
         return btoa(atob(str)) === str;
     } catch (err) {
-        // Verificar si tiene el formato data:image/...;base64,
         const base64Regex = /^data:image\/(png|jpeg|jpg|gif);base64,/;
         if (base64Regex.test(str)) {
             const base64Data = str.split(',')[1];

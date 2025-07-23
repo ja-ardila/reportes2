@@ -1,5 +1,4 @@
 # Lambda para crear reportes
-# Configuración simplificada para AWS Academy - Sin API Gateway
 
 # Configuración de Terraform y provider
 terraform {

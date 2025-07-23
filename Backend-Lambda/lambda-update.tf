@@ -1,6 +1,3 @@
-# Lambda para actualizar reportes
-# Configuración simplificada para AWS Academy - Sin API Gateway
-
 resource "aws_lambda_function" "update_reporte" {
   filename         = "lambda-update-reporte-with-deps.zip"
   function_name    = "update-reporte"

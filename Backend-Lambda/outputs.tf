@@ -1,6 +1,4 @@
-# Outputs centralizados para el proyecto de lambdas
 
-# Outputs adicionales compatibles con versiones anteriores
 output "lambda_function_name" {
   value = aws_lambda_function.create_reporte.function_name
   description = "Nombre de la lambda de creación (compatibilidad)"
