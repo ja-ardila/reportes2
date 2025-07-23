@@ -295,24 +295,45 @@ async function processImages(imagenes, reporteId, connection) {
     for (let i = 0; i < imagenes.length; i++) {
         const imagen = imagenes[i];
         
-        if (!imagen.nombre || !imagen.data || !imagen.tipo) {
+        if (!imagen.data) {
+            console.log('Imagen sin data, saltando...');
             continue;
         }
         
-        const timestamp = Date.now();
-        const fileName = `reportes/${reporteId}/${timestamp}_${imagen.nombre}`;
-        
         try {
+            // Validar que sea base64 válido
+            if (!isValidBase64(imagen.data)) {
+                console.error(`Imagen con data base64 inválida, saltando...`);
+                continue;
+            }
 
-            console.log(`Simulando upload de imagen: ${imagen.nombre} como ${fileName}`);
+            console.log(`Guardando imagen base64 en base de datos...`);
             
             await connection.execute(
                 `INSERT INTO imagenes (id_reporte, ruta_imagen) VALUES (?, ?)`,
-                [reporteId, fileName]
+                [reporteId, imagen.data]
             );
             
         } catch (imageError) {
-            console.error(`Error procesando imagen ${imagen.nombre}:`, imageError);
+            console.error(`Error procesando imagen:`, imageError);
         }
+    }
+}
+
+function isValidBase64(str) {
+    try {
+        return btoa(atob(str)) === str;
+    } catch (err) {
+        // Verificar si tiene el formato data:image/...;base64,
+        const base64Regex = /^data:image\/(png|jpeg|jpg|gif);base64,/;
+        if (base64Regex.test(str)) {
+            const base64Data = str.split(',')[1];
+            try {
+                return btoa(atob(base64Data)) === base64Data;
+            } catch (e) {
+                return false;
+            }
+        }
+        return false;
     }
 }
