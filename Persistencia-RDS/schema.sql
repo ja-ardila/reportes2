@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
     nombre VARCHAR(100) NOT NULL,
     rol ENUM('admin', 'tecnico') DEFAULT 'tecnico',
     token VARCHAR(64),
-    firma_tecnico VARCHAR(255)
+    firma_tecnico LONGTEXT
 );
 
 -- Tabla reportes
@@ -38,11 +38,11 @@ CREATE TABLE IF NOT EXISTS reportes (
     observaciones VARCHAR(3000),
     cedula_tecnico VARCHAR(20),
     nombre_tecnico VARCHAR(100),
-    firma_tecnico VARCHAR(100),
+    firma_tecnico LONGTEXT,
     cedula_encargado VARCHAR(20),
     nombre_encargado VARCHAR(100),
     id_usuario INT(11),
-    firma_encargado VARCHAR(255),
+    firma_encargado LONGTEXT,
     token VARCHAR(64),
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
 );
@@ -51,6 +51,6 @@ CREATE TABLE IF NOT EXISTS reportes (
 CREATE TABLE IF NOT EXISTS imagenes (
     id INT(11) AUTO_INCREMENT PRIMARY KEY,
     id_reporte INT(11) NOT NULL,
-    ruta_imagen VARCHAR(500),
+    ruta_imagen LONGTEXT,
     FOREIGN KEY (id_reporte) REFERENCES reportes(id) ON DELETE CASCADE
 );
