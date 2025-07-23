@@ -1,0 +1,10 @@
+{
+  "name": "lambda-create-reporte",
+  "version": "1.0.0",
+  "description": "Lambda function para crear reportes",
+  "main": "create-service.js",
+  "dependencies": {
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.14.2"
+  }
+}
