@@ -8,3 +8,7 @@ variable "aws_secret_key" {
 variable "region" {
     description = "AWS region"
 }
+variable "db_password" {
+    description = "Password for the RDS database"
+    sensitive = true
+}
