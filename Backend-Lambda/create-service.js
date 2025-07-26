@@ -30,8 +30,6 @@ exports.handler = async (event) => {
     }
     
     try {
-        // Para invocación directa (testing), no requiere autenticación
-        // Para API Gateway, sí requiere el header de autorización
         let userId = null;
         
         if (event.headers && (event.headers.Authorization || event.headers.authorization)) {
@@ -64,13 +62,11 @@ exports.handler = async (event) => {
                 };
             }
         } else {
-            // Para testing directo, usar un usuario de prueba
             userId = 1;
         }
 
         let requestBody;
         
-        // Manejar tanto invocación directa como API Gateway
         if (event.body) {
             try {
                 requestBody = JSON.parse(event.body);
@@ -85,7 +81,6 @@ exports.handler = async (event) => {
                 };
             }
         } else {
-            // Para invocación directa, el evento es el cuerpo
             requestBody = event;
         }
         
@@ -138,7 +133,6 @@ exports.handler = async (event) => {
             
             await connection.beginTransaction();
             
-            // Preparar la fecha - si no viene, usar fecha actual
             const fechaReporte = requestBody.fecha || new Date().toISOString().slice(0, 19).replace('T', ' ');
             
             const [reporteResult] = await connection.execute(
@@ -301,7 +295,6 @@ async function processImages(imagenes, reporteId, connection) {
         }
         
         try {
-            // Validar que sea base64 válido
             if (!isValidBase64(imagen.data)) {
                 console.error(`Imagen con data base64 inválida, saltando...`);
                 continue;
@@ -324,7 +317,6 @@ function isValidBase64(str) {
     try {
         return btoa(atob(str)) === str;
     } catch (err) {
-        // Verificar si tiene el formato data:image/...;base64,
         const base64Regex = /^data:image\/(png|jpeg|jpg|gif);base64,/;
         if (base64Regex.test(str)) {
             const base64Data = str.split(',')[1];
