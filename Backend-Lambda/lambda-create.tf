@@ -20,7 +20,7 @@ data "aws_caller_identity" "current" {}
 resource "aws_lambda_function" "create_reporte" {
   filename         = "lambda-create-reporte-with-deps.zip"
   function_name    = "create-reporte"
-  role            = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/lambda-run-role"
+  role            = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/LabRole"
   handler         = "create-service.handler"
   runtime         = "nodejs18.x"
   timeout         = 30

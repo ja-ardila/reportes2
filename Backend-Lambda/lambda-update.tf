@@ -1,7 +1,7 @@
 resource "aws_lambda_function" "update_reporte" {
   filename         = "lambda-update-reporte-with-deps.zip"
   function_name    = "update-reporte"
-  role            = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/lambda-run-role"
+  role            = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/LabRole"
   handler         = "update-service.handler"
   runtime         = "nodejs18.x"
   timeout         = 30
