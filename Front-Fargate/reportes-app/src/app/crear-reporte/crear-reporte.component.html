@@ -119,13 +119,10 @@
       <label>Firma encargado:</label>
       <div class="signature-container">
         <canvas #firmaCanvas id="signature-pad"></canvas>
-
       </div>
+      <button type="button" class="btn-clear" (click)="clearSignature()">Borrar Firma</button>
       <input type="hidden" formControlName="signature" />
     </div>
-
-    <button type="button" class="btn-clear" (click)="clearSignature()">Borrar Firma</button>
-
 
     <div class="form-group">
       <label for="imagenes">Imágenes:</label>

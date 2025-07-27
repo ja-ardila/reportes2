@@ -1,86 +1,141 @@
-<h1>Editar Reporte</h1>
-<form [formGroup]="formulario" (ngSubmit)="onSubmit()">
-  <label>Empresa:</label>
-  <input formControlName="empresa" type="text" required />
-
-  <label>NIT:</label>
-  <input formControlName="nit" type="text" required />
-
-  <label>Dirección:</label>
-  <input formControlName="direccion" type="text" required />
-
-  <label>Teléfono:</label>
-  <input formControlName="telefono" type="text" required />
-
-  <label>Persona de contacto:</label>
-  <input formControlName="contacto" type="text" required />
-
-  <label>Email:</label>
-  <input formControlName="email" type="email" required />
-
-  <label>Ciudad:</label>
-  <input formControlName="ciudad" type="text" required />
-
-  <label>Fecha inicio:</label>
-  <input formControlName="fechai" type="date" required />
-
-  <label>Fecha cierre:</label>
-  <input formControlName="fechac" type="date" required />
-
-  <label>Hora inicio:</label>
-  <input formControlName="horai" type="time" required />
-
-  <label>Hora cierre:</label>
-  <input formControlName="horac" type="time" required />
-
-  <label>Servicio reportado:</label>
-  <input formControlName="servicior" type="text" required />
-
-  <label>Tipo de servicio:</label>
-  <input formControlName="tiposervicio" type="text" required />
-
-  <label>Informe:</label>
-  <textarea formControlName="informe" rows="6"></textarea>
-
-  <label>Observaciones:</label>
-  <textarea formControlName="observaciones" rows="5"></textarea>
-
-  <label>Cédula técnico:</label>
-  <input formControlName="cedulat" type="text" required />
-
-  <label>Firma técnico (selección):</label>
-  <select formControlName="firma">
-    <option value="">-- Seleccione técnico --</option>
-    <option value="firmaJD.png">Juan Díaz</option>
-    <option value="firmaMG.png">María Gómez</option>
-    <!-- Agrega más técnicos si es necesario -->
-  </select>
-
-  <label>Nombre técnico:</label>
-  <input formControlName="nombret" type="text" required />
-
-  <label>Cédula encargado:</label>
-  <input formControlName="cedulae" type="text" required />
-
-  <label>Nombre encargado:</label>
-  <input formControlName="nombree" type="text" required />
-
-  <label>Firma encargado (dibujo):</label>
-  <canvas #firmaCanvas style="border:1px solid #000; width:100%; height:200px;"></canvas>
-  <button type="button" (click)="clearSignature()">Borrar Firma</button>
-
-  <label>Imágenes nuevas:</label>
-  <input type="file" multiple (change)="onFileChange($event)" />
-
-  <div *ngIf="imagenesServidor.length > 0">
-    <h3>Imágenes del reporte:</h3>
-    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
-      <div *ngFor="let img of imagenesServidor" style="position: relative; width: 30%;">
-        <img [src]="img.ruta" style="width: 100%; height: auto; border: 1px solid #ccc; border-radius: 5px;" />
-        <button type="button" (click)="eliminarImagen(img.id)" style="position: absolute; top: 5px; right: 5px; background: red; color: white; border: none; padding: 5px; cursor: pointer;">×</button>
-      </div>
+<div class="container">
+  <h1>{{ reporteId ? 'Editar Reporte No. ' + reporteId : 'Editar Reporte' }}</h1>
+  
+  <div class="btn-container">
+    <div class="btn-atras">
+      <a routerLink="/listado" class="btn-primary">Atrás</a>
     </div>
   </div>
 
-  <button type="submit">Actualizar Reporte</button>
-</form>
+  <form [formGroup]="formulario" (ngSubmit)="onSubmit()" class="reporte-form">
+    <div class="form-group">
+      <label for="empresa">Empresa:</label>
+      <input formControlName="empresa" type="text" id="empresa" required />
+    </div>
+
+    <div class="form-group">
+      <label for="nit">NIT:</label>
+      <input formControlName="nit" type="text" id="nit" required />
+    </div>
+
+    <div class="form-group">
+      <label for="direccion">Dirección:</label>
+      <input formControlName="direccion" type="text" id="direccion" required />
+    </div>
+
+    <div class="form-group">
+      <label for="telefono">Teléfono:</label>
+      <input formControlName="telefono" type="text" id="telefono" required />
+    </div>
+
+    <div class="form-group">
+      <label for="contacto">Persona de contacto:</label>
+      <input formControlName="contacto" type="text" id="contacto" required />
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input formControlName="email" type="email" id="email" required />
+    </div>
+
+    <div class="form-group">
+      <label for="ciudad">Ciudad:</label>
+      <input formControlName="ciudad" type="text" id="ciudad" required />
+    </div>
+
+    <div class="form-group">
+      <label for="fechai">Fecha inicio:</label>
+      <input formControlName="fechai" type="date" id="fechai" required />
+    </div>
+
+    <div class="form-group">
+      <label for="fechac">Fecha cierre:</label>
+      <input formControlName="fechac" type="date" id="fechac" required />
+    </div>
+
+    <div class="form-group">
+      <label for="horai">Hora inicio:</label>
+      <input formControlName="horai" type="time" id="horai" required />
+    </div>
+
+    <div class="form-group">
+      <label for="horac">Hora cierre:</label>
+      <input formControlName="horac" type="time" id="horac" required />
+    </div>
+
+    <div class="form-group">
+      <label for="servicior">Servicio reportado:</label>
+      <input formControlName="servicior" type="text" id="servicior" required />
+    </div>
+
+    <div class="form-group">
+      <label for="tiposervicio">Tipo de servicio:</label>
+      <input formControlName="tiposervicio" type="text" id="tiposervicio" required />
+    </div>
+
+    <div class="form-group">
+      <label for="informe">Informe:</label>
+      <textarea formControlName="informe" id="informe" maxlength="4500" rows="6" 
+                placeholder="Describa detalladamente el trabajo realizado..."></textarea>
+      <small class="char-counter">{{ formulario.get('informe')?.value?.length || 0 }} / 4500 caracteres</small>
+    </div>
+
+    <div class="form-group">
+      <label for="observaciones">Observaciones:</label>
+      <textarea formControlName="observaciones" id="observaciones" maxlength="3000" rows="5" 
+                placeholder="Observaciones adicionales..."></textarea>
+      <small class="char-counter">{{ formulario.get('observaciones')?.value?.length || 0 }} / 3000 caracteres</small>
+    </div>
+
+    <div class="form-group">
+      <label for="cedulat">Cédula técnico:</label>
+      <input formControlName="cedulat" type="text" id="cedulat" required />
+    </div>
+
+    <div class="form-group">
+      <label for="firma">Firma técnico:</label>
+      <select formControlName="firma" id="firma" required>
+        <option value="">-- Seleccione técnico --</option>
+        <option *ngFor="let tecnico of tecnicos" [value]="tecnico.id">{{ tecnico.nombre }}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="nombret">Nombre técnico:</label>
+      <input formControlName="nombret" type="text" id="nombret" required />
+    </div>
+
+    <div class="form-group">
+      <label for="cedulae">Cédula encargado:</label>
+      <input formControlName="cedulae" type="text" id="cedulae" required />
+    </div>
+
+    <div class="form-group">
+      <label for="nombree">Nombre encargado:</label>
+      <input formControlName="nombree" type="text" id="nombree" required />
+    </div>
+
+    <div class="form-group">
+      <label for="imagenes">Agregar Imágenes:</label>
+      <input type="file" id="imagenes" multiple accept="image/*" (change)="onFileChange($event)" />
+      <small>Ningún archivo seleccionado</small>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-editar" [disabled]="formulario.invalid">
+        Editar Reporte
+      </button>
+    </div>
+  </form>
+
+  <!-- Mostrar imágenes existentes fuera del formulario -->
+  <div *ngIf="imagenesServidor.length > 0" class="imagenes-section">
+    <h3>Imágenes del reporte:</h3>
+    <div class="imagenes-grid">
+      <div *ngFor="let img of imagenesServidor" class="imagen-item">
+        <img [src]="img.ruta" alt="Imagen del reporte" />
+        <button type="button" class="btn-eliminar" (click)="eliminarImagen(img.id)">×</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,26 +1,29 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { ReportesLambdaService, Reporte } from '../services/reportes-lambda.service';
-import SignaturePad from 'signature_pad';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-editar-reporte',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, HttpClientModule],
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, RouterModule],
   templateUrl: './editar-reporte.component.html',
   styleUrls: ['./editar-reporte.component.css']
 })
-export class EditarReporteComponent implements AfterViewInit {
+export class EditarReporteComponent implements OnInit {
   formulario!: FormGroup;
-  firmaBase64: string = '';
   imagenesBase64: string[] = [];
   imagenesServidor: { id: number, ruta: string }[] = [];
+  reporteId: string = '';
+  tecnicos = [
+    { id: 'firmaDB.png', nombre: 'Daniel Botía' },
+    { id: 'firmaDG.png', nombre: 'Diego Garzón' },
+    { id: 'firmaJA.png', nombre: 'Jorge Ardila' },
+    { id: 'firmaMF.png', nombre: 'Miguel Forero' }
+  ];
 
-  @ViewChild('firmaCanvas', { static: true }) firmaCanvas!: ElementRef<HTMLCanvasElement>;
-  private signaturePad!: SignaturePad;
   private id!: string;
 
   constructor(
@@ -52,33 +55,15 @@ export class EditarReporteComponent implements AfterViewInit {
       nombret: ['', Validators.required],
       cedulae: ['', Validators.required],
       nombree: ['', Validators.required],
-      signature: [''],
       imagenes: [[]]
     });
 
     this.id = this.route.snapshot.paramMap.get('id')!;
+    this.reporteId = this.id; // Para mostrar en el título
     this.http.get<any>(`/api/reportes/${this.id}`).subscribe(data => {
       this.formulario.patchValue(data);
       this.imagenesServidor = data.imagenes || [];
     });
-  }
-
-  ngAfterViewInit(): void {
-    this.signaturePad = new SignaturePad(this.firmaCanvas.nativeElement);
-    this.resizeCanvas();
-  }
-
-  resizeCanvas(): void {
-    const canvas = this.firmaCanvas.nativeElement;
-    const ratio = Math.max(window.devicePixelRatio || 1, 1);
-    canvas.width = canvas.offsetWidth * ratio;
-    canvas.height = canvas.offsetHeight * ratio;
-    canvas.getContext('2d')?.scale(ratio, ratio);
-    this.signaturePad.clear();
-  }
-
-  clearSignature(): void {
-    this.signaturePad.clear();
   }
 
   onFileChange(event: Event): void {
@@ -111,11 +96,6 @@ export class EditarReporteComponent implements AfterViewInit {
   }
 
   onSubmit(): void {
-    if (!this.signaturePad.isEmpty()) {
-      this.firmaBase64 = this.signaturePad.toDataURL();
-      this.formulario.patchValue({ signature: this.firmaBase64 });
-    }
-
     const payload = this.formulario.value;
     this.http.put(`/api/reportes/${this.id}`, payload).subscribe({
       next: () => {
