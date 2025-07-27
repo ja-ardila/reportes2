@@ -1,0 +1,86 @@
+<h1>Editar Reporte</h1>
+<form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+  <label>Empresa:</label>
+  <input formControlName="empresa" type="text" required />
+
+  <label>NIT:</label>
+  <input formControlName="nit" type="text" required />
+
+  <label>Dirección:</label>
+  <input formControlName="direccion" type="text" required />
+
+  <label>Teléfono:</label>
+  <input formControlName="telefono" type="text" required />
+
+  <label>Persona de contacto:</label>
+  <input formControlName="contacto" type="text" required />
+
+  <label>Email:</label>
+  <input formControlName="email" type="email" required />
+
+  <label>Ciudad:</label>
+  <input formControlName="ciudad" type="text" required />
+
+  <label>Fecha inicio:</label>
+  <input formControlName="fechai" type="date" required />
+
+  <label>Fecha cierre:</label>
+  <input formControlName="fechac" type="date" required />
+
+  <label>Hora inicio:</label>
+  <input formControlName="horai" type="time" required />
+
+  <label>Hora cierre:</label>
+  <input formControlName="horac" type="time" required />
+
+  <label>Servicio reportado:</label>
+  <input formControlName="servicior" type="text" required />
+
+  <label>Tipo de servicio:</label>
+  <input formControlName="tiposervicio" type="text" required />
+
+  <label>Informe:</label>
+  <textarea formControlName="informe" rows="6"></textarea>
+
+  <label>Observaciones:</label>
+  <textarea formControlName="observaciones" rows="5"></textarea>
+
+  <label>Cédula técnico:</label>
+  <input formControlName="cedulat" type="text" required />
+
+  <label>Firma técnico (selección):</label>
+  <select formControlName="firma">
+    <option value="">-- Seleccione técnico --</option>
+    <option value="firmaJD.png">Juan Díaz</option>
+    <option value="firmaMG.png">María Gómez</option>
+    <!-- Agrega más técnicos si es necesario -->
+  </select>
+
+  <label>Nombre técnico:</label>
+  <input formControlName="nombret" type="text" required />
+
+  <label>Cédula encargado:</label>
+  <input formControlName="cedulae" type="text" required />
+
+  <label>Nombre encargado:</label>
+  <input formControlName="nombree" type="text" required />
+
+  <label>Firma encargado (dibujo):</label>
+  <canvas #firmaCanvas style="border:1px solid #000; width:100%; height:200px;"></canvas>
+  <button type="button" (click)="clearSignature()">Borrar Firma</button>
+
+  <label>Imágenes nuevas:</label>
+  <input type="file" multiple (change)="onFileChange($event)" />
+
+  <div *ngIf="imagenesServidor.length > 0">
+    <h3>Imágenes del reporte:</h3>
+    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+      <div *ngFor="let img of imagenesServidor" style="position: relative; width: 30%;">
+        <img [src]="img.ruta" style="width: 100%; height: auto; border: 1px solid #ccc; border-radius: 5px;" />
+        <button type="button" (click)="eliminarImagen(img.id)" style="position: absolute; top: 5px; right: 5px; background: red; color: white; border: none; padding: 5px; cursor: pointer;">×</button>
+      </div>
+    </div>
+  </div>
+
+  <button type="submit">Actualizar Reporte</button>
+</form>

@@ -1,0 +1,95 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f1f1f1;
+  margin: 0;
+  padding: 20px;
+}
+
+form {
+  max-width: 400px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="number"],
+input[type="file"],
+input[type="date"],
+input[type="time"],
+textarea,
+select {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+textarea {
+  min-height: 100px;
+}
+
+button[type="submit"],
+button[type="button"] {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover,
+button[type="button"]:hover {
+  background-color: #0056b3;
+}
+
+canvas {
+  border: 1px solid #000;
+  width: 100%;
+  height: 200px;
+}
+
+small {
+  display: block;
+  margin-bottom: 10px;
+  color: #666;
+}
+
+/* Responsive */
+@media screen and (max-width: 1090px) {
+  form {
+    max-width: 90%;
+    padding: 4%;
+  }
+
+  input,
+  textarea,
+  select {
+    font-size: 20px;
+  }
+
+  button {
+    font-size: 20px;
+  }
+
+  textarea {
+    min-height: 200px;
+  }
+
+  small {
+    font-size: 18px;
+  }
+}
