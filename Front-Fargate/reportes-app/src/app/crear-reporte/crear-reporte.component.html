@@ -1,4 +1,9 @@
 <h1>Generar Reporte</h1>
+<div class="botonregreso">
+  <div class="boton">
+    <a routerLink="/listado" class="btn btn-primary">Atrás</a>
+  </div>
+</div>
 <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
   <label>Empresa:</label>
   <input formControlName="empresa" type="text" required />
@@ -10,7 +15,7 @@
   <input formControlName="direccion" type="text" required />
 
   <label>Teléfono:</label>
-  <input formControlName="telefono" type="text" required />
+  <input formControlName="telefono" type="number" required />
 
   <label>Persona de contacto:</label>
   <input formControlName="contacto" type="text" required />
@@ -40,36 +45,35 @@
   <input formControlName="tiposervicio" type="text" required />
 
   <label>Informe:</label>
-  <textarea formControlName="informe" rows="6"></textarea>
+  <textarea formControlName="informe" maxlength="4500" rows="6"></textarea>
   <small>{{ formulario.get('informe')?.value?.length || 0 }} / 4500 caracteres</small>
 
   <label>Observaciones:</label>
-  <textarea formControlName="observaciones" rows="5"></textarea>
+  <textarea formControlName="observaciones" maxlength="3000" rows="5"></textarea>
   <small>{{ formulario.get('observaciones')?.value?.length || 0 }} / 3000 caracteres</small>
 
   <label>Cédula técnico:</label>
-  <input formControlName="cedulat" type="text" required />
+  <input formControlName="cedulat" type="number" required />
 
   <label>Firma técnico (selección):</label>
-  <select formControlName="firma">
+  <select formControlName="firma" required>
     <option value="">-- Seleccione técnico --</option>
-    <option value="firmaJD.png">Juan Díaz</option>
-    <option value="firmaMG.png">María Gómez</option>
-    <!-- Agrega dinámicamente los valores si es necesario -->
+    <option *ngFor="let tecnico of tecnicos" [value]="tecnico.id">{{ tecnico.nombre }}</option>
   </select>
 
   <label>Nombre técnico:</label>
   <input formControlName="nombret" type="text" required />
 
   <label>Cédula encargado:</label>
-  <input formControlName="cedulae" type="text" required />
+  <input formControlName="cedulae" type="number" required />
 
   <label>Nombre encargado:</label>
   <input formControlName="nombree" type="text" required />
 
   <label>Firma encargado (dibujo):</label>
-  <canvas #firmaCanvas style="border:1px solid #000; width:100%; height:200px;"></canvas>
-  <button type="button" (click)="clearSignature()">Borrar Firma</button>
+  <canvas #firmaCanvas id="signature-pad" style="border:1px solid #000; width: 100%; height: 200px;"></canvas>
+  <button type="button" id="clear" (click)="clearSignature()">Borrar Firma</button>
+  <input type="hidden" formControlName="signature" />
 
   <label>Imágenes:</label>
   <input type="file" multiple (change)="onFileChange($event)" />

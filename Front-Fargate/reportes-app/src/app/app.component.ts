@@ -6,27 +6,7 @@ import { RouterOutlet, RouterModule } from '@angular/router';
   selector: 'app-root',
   standalone: true,
   imports: [CommonModule, RouterOutlet, RouterModule],
-  template: `
-    <div class="app">
-      <header class="app-header">
-        <div class="header-content">
-          <h1>Sistema de Reportes H323</h1>
-          <nav class="nav-menu">
-            <a routerLink="/listado" routerLinkActive="active">Listado de Reportes</a>
-            <a routerLink="/crear-reporte" routerLinkActive="active">Nuevo Reporte</a>
-          </nav>
-        </div>
-      </header>
-      
-      <main class="app-main">
-        <router-outlet></router-outlet>
-      </main>
-      
-      <footer class="app-footer">
-        <p>&copy; 2024 H323 - Sistema de Reportes de Servicio</p>
-      </footer>
-    </div>
-  `,
+  template: `<router-outlet></router-outlet>`,
   styles: [`
     .app {
       min-height: 100vh;

@@ -18,7 +18,7 @@ export class CrearReporteComponent implements AfterViewInit {
   formulario: FormGroup;
   imagenesBase64: string[] = [];
   firmaBase64: string = '';
-
+  tecnicos: Usuario[] = [];
   @ViewChild('firmaCanvas', { static: true }) firmaCanvas!: ElementRef<HTMLCanvasElement>;
   private signaturePad!: SignaturePad;
 

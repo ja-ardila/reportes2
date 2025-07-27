@@ -1,3 +1,5 @@
+/* crear-reporte.component.css */
+
 body {
   font-family: Arial, sans-serif;
   background-color: #f1f1f1;
@@ -25,71 +27,149 @@ input[type="number"],
 input[type="file"],
 input[type="date"],
 input[type="time"],
-textarea,
-select {
+select,
+textarea {
   width: 100%;
   padding: 10px;
-  font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
   margin-bottom: 10px;
+  font-size: 14px;
 }
 
 textarea {
+  max-width: 100%;
+  min-width: 100%;
   min-height: 100px;
 }
 
 button[type="submit"],
-button[type="button"] {
+input[type="submit"] {
   background-color: #007bff;
   color: #fff;
   padding: 10px 20px;
-  margin-top: 10px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
 }
 
 button[type="submit"]:hover,
-button[type="button"]:hover {
+input[type="submit"]:hover {
   background-color: #0056b3;
 }
 
-canvas {
-  border: 1px solid #000;
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+input[type="file"] {
+  cursor: pointer;
+}
+
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-inner-spin-button,
+input[type="time"]::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+input[type="date"]::-webkit-input-placeholder,
+input[type="time"]::-webkit-input-placeholder {
+  color: #999;
+}
+
+.botonregreso {
+  border-radius: 5px;
   width: 100%;
-  height: 200px;
-}
-
-small {
-  display: block;
+  max-width: 440px;
+  margin: 0 auto;
+  background-color: #fff;
   margin-bottom: 10px;
-  color: #666;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Responsive */
+.boton {
+  width: 15%;
+  height: auto;
+  padding: 2%;
+  padding-left: 20px;
+  padding-right: auto;
+  text-align: center;
+}
+
+a {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 12px;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+a:hover {
+  background-color: #0056b3;
+}
+
 @media screen and (max-width: 1090px) {
   form {
-    max-width: 90%;
+    max-width: 82%;
+    margin: 0 auto;
+    background-color: #fff;
     padding: 4%;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
 
-  input,
+  .botonregreso {
+    border-radius: 5px;
+    width: 100%;
+    max-width: 90%;
+    margin: 0 auto;
+    background-color: #fff;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .boton {
+    width: 15%;
+    height: auto;
+    padding: 2%;
+    padding-left: 20px;
+    padding-right: auto;
+    text-align: center;
+  }
+
+  body {
+    font-size: 40px;
+  }
+
+  a {
+    font-size: 40px;
+  }
+
+  input[type="text"],
+  input[type="password"],
+  input[type="email"],
+  input[type="number"],
+  input[type="file"],
+  input[type="date"],
+  input[type="time"],
   textarea,
   select {
-    font-size: 20px;
+    width: 100%;
+    padding: 10px;
+    font-size: 40px;
+    box-sizing: border-box;
   }
 
-  button {
-    font-size: 20px;
+  input[type="submit"] {
+    font-size: 40px;
   }
 
   textarea {
-    min-height: 200px;
-  }
-
-  small {
-    font-size: 18px;
+    min-height: 500px;
   }
 }
