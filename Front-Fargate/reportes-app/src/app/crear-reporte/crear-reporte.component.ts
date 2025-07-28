@@ -40,9 +40,9 @@ export class CrearReporteComponent implements AfterViewInit {
       email: ['', [Validators.required, Validators.email]],
       ciudad: ['', Validators.required],
       fecha_inicio: ['', Validators.required],
-      fechac: ['', Validators.required],
-      horai: ['', Validators.required],
-      horac: ['', Validators.required],
+      fecha_cierre: ['', Validators.required],
+      hora_inicio: ['', Validators.required],
+      hora_cierre: ['', Validators.required],
       servicio_reportado: ['', Validators.required],
       tiposervicio: ['', Validators.required],
       informe: ['', [Validators.required, Validators.maxLength(4500)]],
@@ -106,7 +106,9 @@ export class CrearReporteComponent implements AfterViewInit {
       const reporte: Reporte = {
         ...this.formulario.value,
         numero_reporte: uuidv4(),
-        usuario: 'usuario_sistema' // Puedes cambiar esto por el usuario actual
+        usuario: 'usuario_sistema',
+         hora_inicio: this.formulario.value.hora_inicio + ':00',
+         hora_cierre: this.formulario.value.hora_cierre + ':00',
       };
 
       this.reportesService.crearReporte(reporte).subscribe({
