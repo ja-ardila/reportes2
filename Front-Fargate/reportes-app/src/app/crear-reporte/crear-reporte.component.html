@@ -1,0 +1,139 @@
+<div class="container">
+  <h1>Generar Reporte</h1>
+
+  <div class="btn-container">
+    <div class="btn-atras">
+      <a href="http://localhost:8080/admin_dashboard.php" class="btn-primary">Atrás</a>
+    </div>
+  </div>
+
+  <form [formGroup]="formulario" (ngSubmit)="onSubmit()" class="reporte-form">
+    <div class="form-group">
+      <label for="empresa">Empresa:</label>
+      <input formControlName="empresa" type="text" id="empresa" required />
+    </div>
+
+    <div class="form-group">
+      <label for="nit">NIT:</label>
+      <input formControlName="nit" type="text" id="nit" required />
+    </div>
+
+    <div class="form-group">
+      <label for="direccion">Dirección:</label>
+      <input formControlName="direccion" type="text" id="direccion" required />
+    </div>
+
+    <div class="form-group">
+      <label for="telefono">Teléfono:</label>
+      <input formControlName="telefono" type="text" id="telefono" required />
+    </div>
+
+    <div class="form-group">
+      <label for="contacto">Persona de contacto:</label>
+      <input formControlName="contacto" type="text" id="contacto" required />
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input formControlName="email" type="email" id="email" required />
+    </div>
+
+    <div class="form-group">
+      <label for="ciudad">Ciudad:</label>
+      <input formControlName="ciudad" type="text" id="ciudad" required />
+    </div>
+
+    <div class="form-group">
+      <label for="fecha_inicio">Fecha inicio:</label>
+      <input formControlName="fecha_inicio" type="date" id="fecha_inicio" required />
+    </div>
+
+    <div class="form-group">
+      <label for="fecha_cierre">Fecha cierre:</label>
+      <input formControlName="fecha_cierre" type="date" id="fecha_cierre" required />
+    </div>
+
+    <div class="form-group">
+      <label for="hora_inicio">Hora inicio:</label>
+      <input formControlName="hora_inicio" type="time" id="hora_inicio  " required />
+    </div>
+
+    <div class="form-group">
+      <label for="hora_cierre">Hora cierre:</label>
+      <input formControlName="hora_cierre" type="time" id="hora_cierre" required />
+    </div>
+
+    <div class="form-group">
+      <label for="servicio_reportado">Servicio reportado:</label>
+      <input formControlName="servicio_reportado" type="text" id="servicio_reportado" required />
+    </div>
+
+    <div class="form-group">
+      <label for="tiposervicio">Tipo de servicio:</label>
+      <input formControlName="tiposervicio" type="text" id="tiposervicio" required />
+    </div>
+
+    <div class="form-group">
+      <label for="informe">Informe:</label>
+      <textarea formControlName="informe" id="informe" maxlength="4500" rows="6"
+        placeholder="Describa detalladamente el trabajo realizado..."></textarea>
+      <small class="char-counter">{{ formulario.get('informe')?.value?.length || 0 }} / 4500 caracteres</small>
+    </div>
+
+    <div class="form-group">
+      <label for="observaciones">Observaciones:</label>
+      <textarea formControlName="observaciones" id="observaciones" maxlength="3000" rows="5"
+        placeholder="Observaciones adicionales..."></textarea>
+      <small class="char-counter">{{ formulario.get('observaciones')?.value?.length || 0 }} / 3000 caracteres</small>
+    </div>
+
+    <div class="form-group">
+      <label for="cedulat">Cédula técnico:</label>
+      <input formControlName="cedulat" type="text" id="cedulat" required />
+    </div>
+
+    <div class="form-group">
+      <label for="firma">Firma técnico:</label>
+      <select formControlName="firma" id="firma" required>
+        <option value="">-- Seleccione técnico --</option>
+        <option *ngFor="let tecnico of tecnicos" [value]="tecnico.id">{{ tecnico.nombre }}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="nombret">Nombre técnico:</label>
+      <input formControlName="nombret" type="text" id="nombret" required />
+    </div>
+
+    <div class="form-group">
+      <label for="cedulae">Cédula encargado:</label>
+      <input formControlName="cedulae" type="text" id="cedulae" required />
+    </div>
+
+    <div class="form-group">
+      <label for="nombree">Nombre encargado:</label>
+      <input formControlName="nombree" type="text" id="nombree" required />
+    </div>
+
+    <div class="form-group">
+      <label>Firma encargado:</label>
+      <div class="signature-container">
+        <canvas #firmaCanvas id="signature-pad"></canvas>
+      </div>
+      <button type="button" class="btn-clear" (click)="clearSignature()">Borrar Firma</button>
+      <input type="hidden" formControlName="signature" />
+    </div>
+
+    <div class="form-group">
+      <label for="imagenes">Imágenes:</label>
+      <input type="file" id="imagenes" multiple accept="image/*" (change)="onFileChange($event)" />
+      <small>Ningún archivo seleccionado</small>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-submit" [disabled]="formulario.invalid">
+        Generar Reporte
+      </button>
+    </div>
+  </form>
+</div>

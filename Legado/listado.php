@@ -226,7 +226,7 @@ $resultado = $conexion->query($sql);
 
     <ul>
         <div class='container'>
-            <div class='sidebyside' style='text-align:center; flex: 1 1 48%'><strong><a href="reportes.php">Crear reporte nuevo</a></strong></div>
+            <div class='sidebyside' style='text-align:center; flex: 1 1 48%'><strong><a href="http://localhost:4200/crear-reporte">Crear reporte nuevo</a></strong></div>
             <div class='sidebyside' style='text-align:center; flex: 1 1 48%'><strong><a href="logout.php">Cerrar Sesión</a></strong></div>
         </div>
         <div class='container'>
@@ -283,7 +283,7 @@ $resultado = $conexion->query($sql);
                 echo "<div class='sidebyside' id='empresa'><p>$empresa</p></div>";
         
                 echo "<div class='sidebyside' id='editar'>
-                <a href='editar.php?id={$id}'>
+                <a href='http://localhost:4200/editar-reporte/{$id}'>
                     <i class='fas fa-edit'></i>
                 </a>
             </div>";

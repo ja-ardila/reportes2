@@ -55,3 +55,87 @@ package-lock.json
 .env.development.local
 .env.test.local
 .env.production.local
+
+# ===== ANGULAR SPECIFIC =====
+
+# Compiled output
+/Front-Fargate/reportes-app/dist
+/Front-Fargate/reportes-app/tmp
+/Front-Fargate/reportes-app/out-tsc
+# Only exists if Bazel was run
+/Front-Fargate/reportes-app/bazel-out
+
+# Angular CLI cache
+/Front-Fargate/reportes-app/.angular/cache
+/Front-Fargate/reportes-app/.angular
+
+# Dependencies
+/Front-Fargate/reportes-app/node_modules
+
+# IDEs and editors
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Visual Studio Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# Angular miscellaneous
+/Front-Fargate/reportes-app/.sass-cache/
+/Front-Fargate/reportes-app/connect.lock
+/Front-Fargate/reportes-app/coverage
+/Front-Fargate/reportes-app/libpeerconnection.log
+/Front-Fargate/reportes-app/testem.log
+/Front-Fargate/reportes-app/typings
+
+# System files
+.DS_Store
+Thumbs.db
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Build outputs
+/Front-Fargate/reportes-app/build/
+/Front-Fargate/reportes-app/dist/
+
+# Test coverage
+/Front-Fargate/reportes-app/coverage/
+*.lcov
+
+# Angular e2e
+/Front-Fargate/reportes-app/e2e/*.js
+/Front-Fargate/reportes-app/e2e/*.map
+
+# Angular environments (if containing sensitive data)
+# /Front-Fargate/reportes-app/src/environments/environment.prod.ts
+
+# Logs
+/Front-Fargate/reportes-app/npm-debug.log*
+/Front-Fargate/reportes-app/yarn-debug.log*
+/Front-Fargate/reportes-app/yarn-error.log*
+/Front-Fargate/reportes-app/lerna-debug.log*
+
+# Temporary files
+*~
+*.tmp
+*.temp
+*.bak
+*.backup
+*.orig
+
+# OS generated files
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db

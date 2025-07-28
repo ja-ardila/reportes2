@@ -1,0 +1,334 @@
+/* crear-reporte.component.css */
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 20px;
+  background-color: #f0f0f0;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+  font-size: 28px;
+  font-weight: normal;
+  margin: 0 0 20px 0;
+}
+
+.btn-container {
+  background-color: white;
+  max-width: 500px;
+  margin: 0 auto 10px auto;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-atras {
+  text-align: left;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+  padding: 8px 20px;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 14px;
+  display: inline-block;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.reporte-form {
+  background-color: white;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: #666;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="date"],
+input[type="time"],
+select,
+textarea {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+  background-color: #fff;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="date"]:focus,
+input[type="time"]:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.char-counter {
+  display: block;
+  text-align: right;
+  color: #888;
+  font-size: 11px;
+  margin-top: 3px;
+}
+
+.signature-container {
+  position: relative;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+#signature-pad {
+  display: block;
+  width: 100%;
+  height: 150px;
+  border: none;
+  border-radius: 4px;
+  cursor: crosshair;
+}
+
+.btn-clear {
+  margin-top: 10px;
+  background-color: #888;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.btn-clear:hover {
+  background-color: #c82333;
+}
+
+input[type="file"] {
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.form-actions {
+  text-align: left;
+  margin-top: 25px;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+}
+
+.btn-submit {
+  background-color: #007bff !important;
+  color: white !important;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.btn-submit:hover:not(:disabled) {
+  background-color: #0056b3 !important;
+}
+
+.btn-submit:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+select option {
+  padding: 8px;
+}
+
+small {
+  color: #666;
+  font-size: 11px;
+  display: block;
+  margin-top: 3px;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .reporte-form {
+    max-width: 90%;
+    padding: 30px 20px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .reporte-form {
+    max-width: 95%;
+    padding: 20px 15px;
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  input[type="date"],
+  input[type="time"],
+  select,
+  textarea {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+}
+
+button[type="submit"]:hover,
+input[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+input[type="file"] {
+  cursor: pointer;
+}
+
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-inner-spin-button,
+input[type="time"]::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+input[type="date"]::-webkit-input-placeholder,
+input[type="time"]::-webkit-input-placeholder {
+  color: #999;
+}
+
+.botonregreso {
+  border-radius: 5px;
+  width: 100%;
+  max-width: 440px;
+  margin: 0 auto;
+  background-color: #fff;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.boton {
+  width: 15%;
+  height: auto;
+  padding: 2%;
+  padding-left: 20px;
+  padding-right: auto;
+  text-align: center;
+}
+
+a {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 12px;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+a:hover {
+  background-color: #0056b3;
+}
+
+@media screen and (max-width: 1090px) {
+  form {
+    max-width: 82%;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 4%;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .botonregreso {
+    border-radius: 5px;
+    width: 100%;
+    max-width: 90%;
+    margin: 0 auto;
+    background-color: #fff;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .boton {
+    width: 15%;
+    height: auto;
+    padding: 2%;
+    padding-left: 20px;
+    padding-right: auto;
+    text-align: center;
+  }
+
+  body {
+    font-size: 40px;
+  }
+
+  a {
+    font-size: 40px;
+  }
+
+  input[type="text"],
+  input[type="password"],
+  input[type="email"],
+  input[type="number"],
+  input[type="file"],
+  input[type="date"],
+  input[type="time"],
+  textarea,
+  select {
+    width: 100%;
+    padding: 10px;
+    font-size: 40px;
+    box-sizing: border-box;
+  }
+
+  input[type="submit"] {
+    font-size: 40px;
+  }
+
+  textarea {
+    min-height: 500px;
+  }
+}
