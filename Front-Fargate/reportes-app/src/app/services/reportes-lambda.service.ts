@@ -16,7 +16,7 @@ export interface Reporte {
   contacto: string;
   email: string;
   ciudad: string;
-  fechai: string;
+  fecha_inicio: string;
   fechac: string;
   horai: string;
   horac: string;
@@ -42,10 +42,12 @@ export interface Usuario {
 }
 
 export interface ApiResponse<T> {
-  success: boolean;
+  success?: boolean;
   message: string;
   data?: T;
   error?: string;
+  reporte?: any;
+  reporteId?: number;
 }
 
 @Injectable({
@@ -54,7 +56,7 @@ export interface ApiResponse<T> {
 export class ReportesLambdaService {
   
   // URLs de las funciones Lambda específicas
-  private readonly CREATE_LAMBDA_URL = 'https://c3mm7spikbcgwlowdqdcnw7awy0uxyln.lambda-url.us-east-1.on.aws';
+  private readonly CREATE_LAMBDA_URL = 'https://wn4g2hmfaenzk465fhrg2fxdd40gyzda.lambda-url.us-east-1.on.aws/';
   private readonly UPDATE_LAMBDA_URL = 'https://qbmwn3v4cyvapv2zqwwrufipye0avpie.lambda-url.us-east-1.on.aws';
   
   private httpOptions = {
@@ -68,16 +70,10 @@ export class ReportesLambdaService {
   /**
    * Crear nuevo reporte
    */
-  crearReporte(reporte: Reporte): Observable<ApiResponse<{id: number, numero_reporte: string}>> {
+  crearReporte(reporte: Reporte): Observable<any> {
     debugger;
-    return this.http.post<ApiResponse<{id: number, numero_reporte: string}>>(
-      this.CREATE_LAMBDA_URL, 
-      reporte, 
-      this.httpOptions
-    ).pipe(
-      retry(2),
-      catchError(this.handleError)
-    );
+  
+     return this.http.post<ApiResponse<any>>(`${this.CREATE_LAMBDA_URL}`, reporte);
   }
 
   /**
@@ -95,6 +91,8 @@ export class ReportesLambdaService {
       retry(2),
       catchError(this.handleError)
     );
+
+    
   }
 
   /**
@@ -112,6 +110,17 @@ export class ReportesLambdaService {
       errorMessage = `Error ${error.status}: ${error.message}`;
       if (error.error && error.error.message) {
         errorMessage = error.error.message;
+      }
+      // Si el error viene en formato de string del Lambda
+      if (typeof error.error === 'string') {
+        try {
+          const parsedError = JSON.parse(error.error);
+          if (parsedError.error) {
+            errorMessage = parsedError.error;
+          }
+        } catch (e) {
+          errorMessage = error.error;
+        }
       }
     }
     

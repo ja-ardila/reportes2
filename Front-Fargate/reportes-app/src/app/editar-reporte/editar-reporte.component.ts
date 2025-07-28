@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, RouterModule } from '@angular/router';
-import { ReportesLambdaService, Reporte } from '../services/reportes-lambda.service';
+import { ReportesLambdaService, Reporte, ApiResponse } from '../services/reportes-lambda.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @Component({
@@ -30,7 +30,8 @@ export class EditarReporteComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private reportesService: ReportesLambdaService
   ) {}
 
   ngOnInit(): void {
@@ -42,10 +43,10 @@ export class EditarReporteComponent implements OnInit {
       contacto: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       ciudad: ['', Validators.required],
-      fechai: ['', Validators.required],
-      fechac: ['', Validators.required],
-      horai: ['', Validators.required],
-      horac: ['', Validators.required],
+      fecha_inicio: ['', Validators.required],
+      fecha_cierre: ['', Validators.required],
+      hora_inicio: ['', Validators.required],
+      hora_cierre: ['', Validators.required],
       servicior: ['', Validators.required],
       tiposervicio: ['', Validators.required],
       informe: ['', Validators.required],
@@ -96,13 +97,29 @@ export class EditarReporteComponent implements OnInit {
   }
 
   onSubmit(): void {
-    const payload = this.formulario.value;
-    this.http.put(`/api/reportes/${this.id}`, payload).subscribe({
-      next: () => {
-        alert('Reporte actualizado correctamente');
-        this.router.navigate(['/listado']);
-      },
-      error: err => alert('Error al actualizar el reporte: ' + err.message)
-    });
+    if (this.formulario.valid) {
+      const reporteData: Reporte = {
+        ...this.formulario.value,
+        usuario: 'usuario_sistema' // Puedes cambiar esto por el usuario actual
+      };
+
+      this.reportesService.actualizarReporte(parseInt(this.id), reporteData).subscribe({
+        next: (response: ApiResponse<any>) => {
+          // La respuesta del Lambda viene con message y reporte
+          if (response.message === 'Reporte actualizado exitosamente' || response.reporte) {
+            alert('Reporte actualizado correctamente');
+            this.router.navigate(['/listado']);
+          } else {
+            alert('Error al actualizar el reporte: ' + response.message);
+          }
+        },
+        error: (err: any) => {
+          console.error('Error:', err);
+          alert('Error al actualizar el reporte. Verifique su conexión.');
+        }
+      });
+    } else {
+      alert('Por favor complete todos los campos requeridos');
+    }
   }
 }

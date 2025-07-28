@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ReportesLambdaService, Reporte, Usuario, ApiResponse } from '../services/reportes-lambda.service';
-
+import { v4 as uuidv4 } from 'uuid';
 import SignaturePad from 'signature_pad';
 
 @Component({
@@ -39,11 +39,11 @@ export class CrearReporteComponent implements AfterViewInit {
       contacto: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       ciudad: ['', Validators.required],
-      fechai: ['', Validators.required],
+      fecha_inicio: ['', Validators.required],
       fechac: ['', Validators.required],
       horai: ['', Validators.required],
       horac: ['', Validators.required],
-      servicior: ['', Validators.required],
+      servicio_reportado: ['', Validators.required],
       tiposervicio: ['', Validators.required],
       informe: ['', [Validators.required, Validators.maxLength(4500)]],
       observaciones: ['', [Validators.required, Validators.maxLength(3000)]],
@@ -105,16 +105,21 @@ export class CrearReporteComponent implements AfterViewInit {
     if (this.formulario.valid) {
       const reporte: Reporte = {
         ...this.formulario.value,
-        fecha: new Date().toISOString(),
+        numero_reporte: uuidv4(),
         usuario: 'usuario_sistema' // Puedes cambiar esto por el usuario actual
       };
 
       this.reportesService.crearReporte(reporte).subscribe({
         next: (response) => {
-          if (response.success) {
-            alert(`Reporte creado correctamente. Número: ${response.data?.numero_reporte}`);
+          debugger;
+          // La respuesta del Lambda viene con message, reporte y reporteId
+          if (response.message === 'Reporte creado exitosamente' || response.reporte) {
+            const reporteCreado = response.reporte;
+            const numeroReporte = reporteCreado?.numero_reporte || response.reporteId;
+            alert(`Reporte creado correctamente. ID: ${reporteCreado?.id}, Número: ${numeroReporte}`);
             this.formulario.reset();
             this.signaturePad.clear();
+            this.imagenesBase64 = [];
           } else {
             alert('Error al crear el reporte: ' + response.message);
           }

@@ -37,7 +37,7 @@ Modernización del sistema de reportes PHP legado convertido a Angular 18. Este 
 
 | Campo PHP | Campo Angular | Descripción |
 |-----------|---------------|-------------|
-| `fechai` | `fechai` | Fecha de inicio |
+| `fecha_inicio` | `fecha_inicio` | Fecha de inicio |
 | `fechac` | `fechac` | Fecha de cierre |
 | `horai` | `horai` | Hora de inicio |
 | `horac` | `horac` | Hora de cierre |
