@@ -51,7 +51,7 @@ export interface ApiResponse<T> {
 @Injectable({
   providedIn: 'root'
 })
-export class ReportesLambdaService {
+export class ReportesLambdaSimpleService {
   
   // URLs de las funciones Lambda específicas
   private readonly CREATE_LAMBDA_URL = 'https://c3mm7spikbcgwlowdqdcnw7awy0uxyln.lambda-url.us-east-1.on.aws';
@@ -69,7 +69,6 @@ export class ReportesLambdaService {
    * Crear nuevo reporte
    */
   crearReporte(reporte: Reporte): Observable<ApiResponse<{id: number, numero_reporte: string}>> {
-    debugger;
     return this.http.post<ApiResponse<{id: number, numero_reporte: string}>>(
       this.CREATE_LAMBDA_URL, 
       reporte, 
@@ -84,12 +83,9 @@ export class ReportesLambdaService {
    * Actualizar reporte existente
    */
   actualizarReporte(id: number, reporte: Reporte): Observable<ApiResponse<any>> {
-    // Crear una copia del reporte sin el id para evitar el error de campo prohibido
-    const { id: reporteId, ...reporteData } = reporte;
-    
     return this.http.put<ApiResponse<any>>(
-      `${this.UPDATE_LAMBDA_URL}?id=${id}`, 
-      reporteData, 
+      this.UPDATE_LAMBDA_URL, 
+      { ...reporte, id }, 
       this.httpOptions
     ).pipe(
       retry(2),

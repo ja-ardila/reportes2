@@ -18,11 +18,19 @@ export class CrearReporteComponent implements AfterViewInit {
   formulario: FormGroup;
   imagenesBase64: string[] = [];
   firmaBase64: string = '';
-  tecnicos: Usuario[] = [];
+  tecnicos: Usuario[] = [
+    { id: 1, nombre: 'Técnico 1', rol: 'tecnico', firma_path: '' },
+    { id: 2, nombre: 'Técnico 2', rol: 'tecnico', firma_path: '' },
+    { id: 3, nombre: 'Técnico 3', rol: 'tecnico', firma_path: '' }
+  ];
   @ViewChild('firmaCanvas', { static: true }) firmaCanvas!: ElementRef<HTMLCanvasElement>;
   private signaturePad!: SignaturePad;
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
+  constructor(
+    private fb: FormBuilder, 
+    private http: HttpClient,
+    private reportesService: ReportesLambdaService
+  ) {
     this.formulario = this.fb.group({
       empresa: ['', Validators.required],
       nit: ['', Validators.required],
@@ -94,11 +102,30 @@ export class CrearReporteComponent implements AfterViewInit {
       this.formulario.patchValue({ signature: this.firmaBase64 });
     }
 
-    const payload = this.formulario.value;
-    // Aquí se envía como JSON en vez de FormData
-    this.http.post('URL_DEL_BACKEND.php', payload).subscribe({
-      next: () => alert('Reporte enviado correctamente'),
-      error: (err) => alert('Error al enviar el reporte: ' + err.message)
-    });
+    if (this.formulario.valid) {
+      const reporte: Reporte = {
+        ...this.formulario.value,
+        fecha: new Date().toISOString(),
+        usuario: 'usuario_sistema' // Puedes cambiar esto por el usuario actual
+      };
+
+      this.reportesService.crearReporte(reporte).subscribe({
+        next: (response) => {
+          if (response.success) {
+            alert(`Reporte creado correctamente. Número: ${response.data?.numero_reporte}`);
+            this.formulario.reset();
+            this.signaturePad.clear();
+          } else {
+            alert('Error al crear el reporte: ' + response.message);
+          }
+        },
+        error: (err) => {
+          console.error('Error:', err);
+          alert('Error al enviar el reporte. Verifique su conexión.');
+        }
+      });
+    } else {
+      alert('Por favor complete todos los campos requeridos');
+    }
   }
 }
